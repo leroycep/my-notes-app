@@ -1,1 +1,2 @@
 - https://github.com/ziglibs/positron
+- does shared immutable state need to be behind a mutex/thread safety mechanism?

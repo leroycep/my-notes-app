@@ -10,9 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Planned]
 
 - https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API
+- https://developer.mozilla.org/en-US/docs/Web/API/File_and_Directory_Entries_API
 - https://github.com/ziglibs/positron
 - does shared immutable state need to be behind a mutex/thread safety mechanism?
 - https://prosemirror.net/
+- https://pwa.kiwix.org/www/index.html
 
 ## [Unreleased]
 
+- store notes in sqlite3 database

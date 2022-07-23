@@ -136,7 +136,25 @@
         "flake-utils": "flake-utils",
         "nix-zig-builder": "nix-zig-builder",
         "nixpkgs": "nixpkgs_2",
+        "sqlite-zig": "sqlite-zig",
         "zig-overlay": "zig-overlay_2"
+      }
+    },
+    "sqlite-zig": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657769148,
+        "narHash": "sha256-lOK8uwCFkfLdobua/Yhjgv6WbWuMV7XvWR9G0zSbCzE=",
+        "owner": "leroycep",
+        "repo": "sqlite-zig",
+        "rev": "55c0a1323bec966b38081775474d6f07c1646f01",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leroycep",
+        "ref": "sqlite-v3.37.0",
+        "repo": "sqlite-zig",
+        "type": "github"
       }
     },
     "zig-overlay": {

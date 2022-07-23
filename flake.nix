@@ -11,6 +11,10 @@
       url = "github:Luukdegram/apple_pie";
       flake = false;
     };
+    sqlite-zig = {
+      url = "github:leroycep/sqlite-zig/sqlite-v3.37.0";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -20,33 +24,37 @@
     zig-overlay,
     nix-zig-builder,
     apple_pie,
+    sqlite-zig,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
       zig = zig-overlay.packages.${system}.master.latest;
       zig-builder = nix-zig-builder.packages.${system}.zig-builder;
+      zigPackages = pkgs.lib.concatStringsSep "\n" [
+        "apple_pie=${apple_pie}/src/apple_pie.zig"
+        "sqlite3=${sqlite-zig}/src/sqlite3.zig"
+      ];
+      sqlite3Src = "${sqlite-zig}/dep/sqlite/sqlite3.c";
     in rec {
       packages.default = packages.my-notes-app;
       packages.my-notes-app = derivation {
         name = "my-notes-app-server";
         src = ./.;
         inherit system;
-        inherit zig;
+        inherit zig zigPackages sqlite3Src;
 
         builder = "${zig-builder}/bin/zig-builder";
         args = ["install"];
-
-        zigPackages = [
-          "apple_pie=${apple_pie}/src/apple_pie.zig"
-        ];
       };
 
       devShell = pkgs.mkShell {
         name = "my-notes-app-devshell";
 
-        zigPackages = [
-          "apple_pie=${apple_pie}/src/apple_pie.zig"
+        nativeBuildInputs = [
+          zig
         ];
+
+        inherit zigPackages sqlite3Src;
       };
 
       formatter = pkgs.alejandra;

@@ -65,6 +65,10 @@ fn index(ctx: *Context, res: *http.Response, req: http.Request) !void {
         return try http.FileServer.serve({}, res, req);
     } else if (req.method() == .post and std.mem.eql(u8, path, "/note")) {
         return postNote(ctx, res, req);
+    } else if (req.method() == .get and std.mem.eql(u8, path, "/static/tachyons.min.css")) {
+        try res.headers.put("Content-Type", "text/css");
+        try res.writer().writeAll(@embedFile("./tachyons.min.css"));
+        return;
     }
 
     try res.headers.put("Content-Type", "text/html");
@@ -72,12 +76,18 @@ fn index(ctx: *Context, res: *http.Response, req: http.Request) !void {
     var out = res.writer();
     try out.writeAll(
         \\<!DOCTYPE html>
-        \\<html>
-        \\<body>
-        \\  <form action="/note" method="POST">
-        \\    <input type="text" name="text" />
-        \\    <button>Add note</button>
-        \\  </form>
+        \\<html lang="en">
+        \\  <meta charset="utf-8">
+        \\  <title>My Notes App</title>
+        \\
+        \\  <meta name="viewport" content="width=device-width, initial-scale=1">
+        \\  <link rel="stylesheet" type="text/css" href="/static/tachyons.min.css">
+        \\  <body>
+        \\    <form action="/note" method="POST">
+        \\      <input type="text" name="text" />
+        \\      <button>Add note</button>
+        \\    </form>
+        \\    <div id="notes" class="pa1 flex flex-wrap justify-start">
         \\
     );
 
@@ -88,7 +98,7 @@ fn index(ctx: *Context, res: *http.Response, req: http.Request) !void {
         const text = stmt.columnText(1);
         // TODO: Escape note text
         try out.print(
-            \\<div>
+            \\<div class="w5 pa3 ma2 shadow-3">
             \\  <input type="hidden" name="id" value="{}">
             \\  {s}
             \\</div>
@@ -96,7 +106,8 @@ fn index(ctx: *Context, res: *http.Response, req: http.Request) !void {
     }
 
     try out.writeAll(
-        \\</body>
+        \\    </div>
+        \\  </body>
         \\</html>
         \\
     );

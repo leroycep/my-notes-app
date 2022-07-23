@@ -51,7 +51,7 @@
         name = "my-notes-app-devshell";
 
         nativeBuildInputs = [
-          zig
+          zig pkgs.entr
         ];
 
         inherit zigPackages sqlite3Src;

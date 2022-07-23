@@ -34,7 +34,7 @@
         "apple_pie=${apple_pie}/src/apple_pie.zig"
         "sqlite3=${sqlite-zig}/src/sqlite3.zig"
       ];
-      sqlite3Src = "${sqlite-zig}/dep/sqlite/sqlite3.c";
+      sqlite3Src = "${sqlite-zig}/src/sqlite3.c";
     in rec {
       packages.default = packages.my-notes-app;
       packages.my-notes-app = derivation {

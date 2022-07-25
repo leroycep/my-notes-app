@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - does shared immutable state need to be behind a mutex/thread safety mechanism?
 - https://prosemirror.net/
 - https://pwa.kiwix.org/www/index.html
-- implement folders for notes
 
 ## [Unreleased]
 
 - store notes in sqlite3 database
+- notes can be dragged and dropped into folders
